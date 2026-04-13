@@ -1,24 +1,32 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
+import AP_LOGO from '/assets/asian-paints-seeklogo.png'
+import CB_LOGO from '/assets/Carlsberg.png'
+import CG_LOGO from '/assets/Casa_grand.png'
 
+import AP1 from '/assets/A_P1.jpg'
+import AP2 from '/assets/A_P2.jpg'
+
+import CB1 from '/assets/carlsberg1.jpg'
+import CB2 from '/assets/carlsberg2.jpg'
+import CB4 from '/assets/carlsberg4.jpg'
+
+import CG from '/assets/Casa_Grande.jpg'
 const brands = [
   {
     name: 'Asian Paints',
-    logo: '/assets/asian-paints-seeklogo.png',
-    photos: ['/assets/A_P1.jpg', '/assets/A_P2.jpg'],
-    tag: 'Paint & Décor',
+    logo: AP_LOGO,
+    photos: [AP1, AP2],
   },
   {
     name: 'Carlsberg',
-    logo: '/assets/Carlsberg.png',
-    photos: ['/assets/carlsberg1.jpg', '/assets/carlsberg2.jpg', '/assets/carlsberg4.jpg'],
-    tag: 'Beverages',
+    logo: CB_LOGO,
+    photos: [CB1, CB2, CB4],
   },
   {
     name: 'Casagrand',
-    logo: '/assets/Casa_grand.png',
-    photos: ['/assets/Casa_Grande.jpg'],
-    tag: 'Real Estate',
+    logo: CG_LOGO,
+    photos: [CG],
   },
 ]
 
@@ -196,7 +204,7 @@ export default function Brands() {
                   </div>
 
                   {brand.photos.length > 1 && (
-                    <div className="flex gap-[6px] roun">
+                    <div className="flex gap-[6px] rounded-smy">
                       {brand.photos.map((_, pi) => (
                         <div
                           key={pi}
