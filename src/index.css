@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #B8922A;
+    --gold-light: #D4AA4A;
+    --dark: #0E0C0A;
+    --dark-2: #1A1714;
+    --dark-3: #252118;
+    --paper: #F5F0E8;
+    --muted: #6B6457;
+    --rule: rgba(184,146,42,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer utilities {
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Gold border-left accent used in multiple cards */
+  .gold-left-bar {
+    border-left: 3px solid var(--gold);
+  }
+
+  /* Problem card hover accent */
+  .problem-card-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .problem-card-wrap:hover::before {
+    opacity: 1;
+  }
+
+  /* Phase arrow pseudo-element */
+  .phase-card-wrap::after {
+    content: '→';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 18px;
+    z-index: 2;
+  }
+  .phase-card-last::after {
+    display: none;
+  }
+}
