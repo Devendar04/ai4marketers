@@ -61,17 +61,25 @@
     opacity: 1;
   }
 
-  /* Phase arrow pseudo-element */
+.phase-card-wrap::after {
+  content: "→";
+  position: absolute;
+  right: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #B8922A;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
   .phase-card-wrap::after {
-    content: '→';
-    position: absolute;
-    right: -14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--gold);
-    font-size: 18px;
-    z-index: 2;
+    content: "↓";
+    right: 50%;
+    top: auto;
+    bottom: -21px;
+    transform: translateX(50%);
   }
+}
   .phase-card-last::after {
     display: none;
   }

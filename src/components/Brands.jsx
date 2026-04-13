@@ -1,54 +1,62 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 
-import AP1 from '/assets/A_P1.jpg'
-import AP2 from '/assets/A_P2.jpg'
-import CB1 from '/assets/carlsberg1.jpg'
-import CB2 from '/assets/carlsberg2.jpg'
-import CB4 from '/assets/carlsberg4.jpg'
-import CG  from '/assets/Casa_Grande.jpg'
-import AP_LOGO from '/assets/asian-paints-seeklogo.png'
-import CB_LOGO from '/assets/Carlsberg.png'
-import CG_LOGO from '/assets/Casa_grand.png'
 const brands = [
   {
     name: 'Asian Paints',
-    logo: AP_LOGO,
-    photos: [AP1, AP2],
+    logo: '/assets/asian-paints-seeklogo.png',
+    photos: ['/assets/A_P1.jpg', '/assets/A_P2.jpg'],
     tag: 'Paint & Décor',
   },
   {
     name: 'Carlsberg',
-    logo: CB_LOGO,
-    photos: [CB1, CB2, CB4],
+    logo: '/assets/Carlsberg.png',
+    photos: ['/assets/carlsberg1.jpg', '/assets/carlsberg2.jpg', '/assets/carlsberg4.jpg'],
     tag: 'Beverages',
   },
   {
     name: 'Casagrand',
-    logo: CG_LOGO,
-    photos: [CG],
+    logo: '/assets/Casa_grand.png',
+    photos: ['/assets/Casa_Grande.jpg'],
     tag: 'Real Estate',
   },
 ]
 
 export default function Brands() {
-  const [current, setCurrent]   = useState(0)
+  const [current, setCurrent] = useState(0)
   const [photoIdx, setPhotoIdx] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
   const slideRefs = useRef([])
   const photoRefs = useRef([])
-  const tlRef     = useRef(null)
+  const tlRef = useRef(null)
 
-  // Main brand crossfade
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768)
+    onResize()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
   useEffect(() => {
     slideRefs.current.forEach((el, i) => {
       if (!el) return
-      gsap.set(el, { opacity: i === 0 ? 1 : 0, y: i === 0 ? 0 : 30 })
+      gsap.set(el, {
+        opacity: i === 0 ? 1 : 0,
+        y: i === 0 ? 0 : 24,
+      })
     })
 
     let idx = 0
+    let alive = true
 
-    function crossfade() {
+    const crossfade = () => {
+      if (!alive) return
+
       const next = (idx + 1) % brands.length
+      const duration = isMobile ? 0.55 : 0.9
+      const hold = isMobile ? 2.5 : 4
+
       const tl = gsap.timeline({
         onComplete: () => {
           idx = next
@@ -57,102 +65,124 @@ export default function Brands() {
           crossfade()
         },
       })
-      tl.to(slideRefs.current[idx], { opacity: 0, y: -20, duration: 0.8, ease: 'power2.in' })
+
+      tl.to(slideRefs.current[idx], {
+        opacity: 0,
+        y: -14,
+        duration: duration * 0.7,
+        ease: 'power2.in',
+      })
+
       tl.fromTo(
         slideRefs.current[next],
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' },
-        '-=0.2'
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration, ease: 'power2.out' },
+        '-=0.15'
       )
-      tl.to({}, { duration: 4 })
+
+      tl.to({}, { duration: hold })
       tlRef.current = tl
     }
 
-    const init = gsap.delayedCall(4, crossfade)
-    return () => { init.kill(); tlRef.current?.kill() }
-  }, [])
+    const start = gsap.delayedCall(isMobile ? 2.5 : 4, crossfade)
 
-  // Photo sub-cycle within each brand
+    return () => {
+      alive = false
+      start.kill()
+      tlRef.current?.kill()
+    }
+  }, [isMobile])
+
   useEffect(() => {
     const photos = brands[current].photos
     if (photos.length <= 1) return
 
+    const els = photoRefs.current.filter(Boolean)
+    if (!els.length) return
+
     let pIdx = 0
-    const els = photoRefs.current
+    const intervalMs = isMobile ? 2600 : 2000
+
+    gsap.set(els, { opacity: 0 })
+    gsap.set(els[0], { opacity: 1 })
 
     const cycle = () => {
       const next = (pIdx + 1) % photos.length
       if (!els[pIdx] || !els[next]) return
 
-      gsap.to(els[pIdx], { opacity: 0, duration: 0.6, ease: 'power2.in' })
+      gsap.to(els[pIdx], {
+        opacity: 0,
+        duration: 0.55,
+        ease: 'power2.in',
+      })
+
       gsap.fromTo(
         els[next],
         { opacity: 0 },
-        { opacity: 1, duration: 0.7, ease: 'power2.out', delay: 0.5 }
+        {
+          opacity: 1,
+          duration: 0.7,
+          ease: 'power2.out',
+        }
       )
+
       pIdx = next
       setPhotoIdx(next)
     }
 
-    const interval = setInterval(cycle, 2000)
+    const interval = setInterval(cycle, intervalMs)
     return () => clearInterval(interval)
-  }, [current])
+  }, [current, isMobile])
 
   return (
-    <section className="py-[90px] px-[5%] bg-dark border-t border-[rgba(184,146,42,0.25)]">
-      <div className="max-w-[1100px] mx-auto">
-
-        {/* Header */}
-        <div className="mb-14">
-          <span className="text-[10px] font-medium tracking-[3.5px] uppercase text-gold mb-4 block">
+    <section className="bg-dark border-t border-[rgba(184,146,42,0.25)] px-4 py-16 sm:px-6 md:px-[5%] md:py-[90px]">
+      <div className="mx-auto max-w-[1100px]">
+        <div className="mb-10 md:mb-14">
+          <span className="mb-4 block text-[10px] font-medium uppercase tracking-[3.5px] text-gold">
             Brands Worked With
           </span>
           <h2
-            className="font-playfair font-black leading-[1.15] tracking-[-0.5px]"
+            className="font-playfair font-black leading-[1.12] tracking-[-0.5px] text-paper"
             style={{ fontSize: 'clamp(28px,4vw,42px)' }}
           >
-            Across categories,<br />sizes, and stages.
+            Across categories,
+            <br />
+            sizes, and stages.
           </h2>
         </div>
 
-        {/* Stage */}
-        <div className="relative overflow-hidden rounded-sm" style={{ height: '480px' }}>
+        <div className="relative overflow-hidden rounded-sm min-h-[480px] md:min-h-[480px]">
           {brands.map((brand, i) => (
             <div
               key={brand.name}
-              ref={el => (slideRefs.current[i] = el)}
-              className="absolute inset-0 grid overflow-hidden"
-              style={{ gridTemplateColumns: '1fr 2fr' }}
+              ref={(el) => (slideRefs.current[i] = el)}
+              className="absolute inset-0 grid grid-cols-1 md:grid-cols-[1fr_2fr]"
             >
-              {/* Left — info */}
               <div
-                className="flex flex-col justify-between px-10 py-10"
-                style={{ background: '#1A1714' }}
+                className="flex flex-col justify-items-start bg-[#1A1714] px-5 py-5 md:px-10 md:py-10"
+                style={{ minHeight: isMobile ? '180px' : 'auto' }}
               >
-                {/* Logo */}
-                <div className="flex items-center" style={{ height: '60px' }}>
+                <div className="flex items-center">
                   <img
                     src={brand.logo}
                     alt={brand.name}
-                    className="max-h-[44px] max-w-[160px] object-fill"
-                    style={{ opacity: 0.9 }}
+                    className="max-h-[32px] max-w-[120px] object-contain opacity-90 md:max-h-[44px] md:max-w-[160px]"
                   />
                 </div>
 
-                {/* Name + tag */}
-                <div>
-                  <span className="text-[10px] tracking-[2.5px] uppercase text-gold mb-3 block">
+                <div className="mt-6">
+                  <span className="mb-2 block text-[10px] uppercase tracking-[2.5px] text-gold">
                     {brand.tag}
                   </span>
+
                   <h3
-                    className="font-playfair font-black text-paper leading-tight mb-6"
+                    className="mb-3 font-playfair font-black leading-tight text-paper md:mb-6"
                     style={{ fontSize: 'clamp(24px,3vw,36px)' }}
                   >
                     {brand.name}
                   </h3>
 
-                  {/* Brand dots */}
-                  <div className="flex gap-2 mb-3">
+                  <div className="mb-3 flex gap-2">
                     {brands.map((_, di) => (
                       <div
                         key={di}
@@ -165,17 +195,17 @@ export default function Brands() {
                     ))}
                   </div>
 
-                  {/* Photo dots (only if multiple) */}
                   {brand.photos.length > 1 && (
-                    <div className="flex gap-[6px]">
+                    <div className="flex gap-[6px] rounded-sm">
                       {brand.photos.map((_, pi) => (
                         <div
                           key={pi}
-                          className="w-[6px] h-[6px] rounded-full transition-all duration-400"
+                          className="h-[6px] w-[6px] rounded-full transition-all duration-400"
                           style={{
-                            background: pi === (i === current ? photoIdx : 0)
-                              ? 'rgba(184,146,42,0.8)'
-                              : '#252118',
+                            background:
+                              pi === (i === current ? photoIdx : 0)
+                                ? 'rgba(184,146,42,0.8)'
+                                : '#252118',
                           }}
                         />
                       ))}
@@ -183,42 +213,35 @@ export default function Brands() {
                   )}
                 </div>
 
-                {/* Counter */}
                 <p className="font-playfair italic text-[13px] text-[#3A3530]">
                   {i + 1} / {brands.length}
                 </p>
               </div>
 
-              {/* Right — photos stacked, fade between them */}
-              <div className="relative overflow-hidden">
+              <div className="relative h-[240px] overflow-hidden md:h-auto rounded-sm">
                 {brand.photos.map((src, pi) => (
                   <img
                     key={pi}
-                    ref={el => {
+                    ref={(el) => {
                       if (i === current) photoRefs.current[pi] = el
                     }}
                     src={src}
                     alt={`${brand.name} ${pi + 1}`}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    style={{
-                      opacity: pi === 0 ? 1 : 0,
-                      
-                    }}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    style={{ opacity: pi === 0 ? 1 : 0 }}
                   />
                 ))}
 
-                {/* Gradient overlay */}
                 <div
-                  className="absolute inset-0 pointer-events-none"
+                  className="pointer-events-none absolute inset-0"
                   style={{
                     background:
                       'linear-gradient(120deg, rgba(14,12,10,0.65) 0%, rgba(184,146,42,0.03) 100%)',
                   }}
                 />
 
-                {/* Watermark */}
                 <span
-                  className="absolute bottom-6 right-8 font-playfair font-black italic select-none pointer-events-none"
+                  className="pointer-events-none absolute bottom-4 right-4 hidden select-none font-playfair font-black italic md:block md:bottom-6 md:right-8"
                   style={{
                     fontSize: 'clamp(36px,5vw,64px)',
                     color: 'rgba(184,146,42,0.12)',

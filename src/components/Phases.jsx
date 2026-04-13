@@ -1,74 +1,92 @@
-import { useFadeUpAll } from '../hooks/useFadeUp'
+import { useFadeUpAll } from "../hooks/useFadeUp";
 
 const phases = [
   {
-    num: 'Phase 01',
-    title: 'Pre-Workshop Discovery',
+    num: "Phase 01",
+    title: "Pre-Workshop Discovery",
     items: [
-      'Discovery calls with the team',
-      'Assessment of current AI usage',
-      'Customised workshop modules',
-      'Pre-read and tool setup guide',
+      "Discovery calls with the team",
+      "Assessment of current AI usage",
+      "Customised workshop modules",
+      "Pre-read and tool setup guide",
     ],
   },
   {
-    num: 'Phase 02',
-    title: 'Full-Day AI Workshop',
+    num: "Phase 02",
+    title: "Full-Day AI Workshop",
     items: [
-      '8-hour in-person session',
-      'Live exercises across 15+ AI tools',
-      'Prompt frameworks and templates',
-      'Real outputs built in the room',
+      "8-hour in-person session",
+      "Live exercises across 15+ AI tools",
+      "Prompt frameworks and templates",
+      "Real outputs built in the room",
     ],
   },
   {
-    num: 'Phase 03',
-    title: 'AI Champions Programme',
+    num: "Phase 03",
+    title: "AI Champions Programme",
     items: [
-      'Prompt cheat sheet per participant',
-      'Ready-to-use AI workflows',
-      'Office hours for Q&A',
-      'Ongoing AI champion support',
+      "Prompt cheat sheet per participant",
+      "Ready-to-use AI workflows",
+      "Office hours for Q&A",
+      "Ongoing AI champion support",
     ],
     last: true,
   },
-]
+];
 
 export default function Phases() {
-  const ref = useFadeUpAll()
+  const ref = useFadeUpAll();
+
   return (
-    <section ref={ref} id="phases" className="py-[90px] px-[5%] bg-dark">
-      <div className="max-w-[1100px] mx-auto">
+    <section
+      ref={ref}
+      id="phases"
+      className="bg-dark px-4 py-16 sm:px-6 md:px-[5%] md:py-[90px]"
+    >
+      <div className="mx-auto max-w-[1100px]">
         {/* Header */}
-        <div className="mb-12 fade-up">
-          <span className="text-[10px] font-medium tracking-[3.5px] uppercase text-gold mb-4 block">
+        <div className="fade-up mb-10 md:mb-12">
+          <span className="mb-3 block text-[10px] font-medium uppercase tracking-[3.5px] text-gold">
             Programme Structure
           </span>
-          <h2 className="font-playfair font-black leading-[1.15] tracking-[-0.5px] mb-3"
-              style={{ fontSize: 'clamp(28px,4vw,42px)' }}>
-            Three phases.<br />One complete system.
+          <h2
+            className="mb-3 font-playfair font-black leading-[1.12] tracking-[-0.5px] text-paper"
+            style={{ fontSize: "clamp(28px,4vw,42px)" }}
+          >
+            Three phases.
+            <br />
+            One complete system.
           </h2>
-          <p className="text-[#7A7068] text-[15px]">
-            Designed to move teams from learning AI to using AI to building AI systems.
+          <p className="max-w-[620px] text-[14px] leading-[1.6] text-[#7A7068] sm:text-[15px]">
+            Designed to move teams from learning AI to using AI to building AI
+            systems.
           </p>
         </div>
 
-        {/* Phase track */}
-        <div className="grid gap-[2px] mb-8"
-             style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px,1fr))' }}>
+        {/* Cards */}
+        <div className="mb-8 grid gap-5 md:gap-[18px] md:grid-cols-3 ">
           {phases.map((ph) => (
             <div
               key={ph.num}
-              className={`fade-up bg-dark-2 px-7 py-8 relative ${ph.last ? 'phase-card-last' : 'phase-card-wrap'}`}
+              className={`fade-up relative rounded-sm bg-dark-2 px-5 py-6 sm:px-6 sm:py-7 md:px-7 md:py-8 ${
+                ph.last ? "phase-card-last" : "phase-card-wrap"
+              }`}
             >
-              <span className="text-[10px] tracking-[3px] uppercase text-gold mb-3 block">{ph.num}</span>
-              <h3 className="font-playfair text-[20px] font-bold mb-4">{ph.title}</h3>
-              <ul className="list-none space-y-0">
+              <span className="mb-2 block text-[10px] uppercase tracking-[3px] text-gold">
+                {ph.num}
+              </span>
+
+              <h3 className="mb-4 font-playfair text-[18px] font-bold leading-[1.2] text-paper sm:text-[20px]">
+                {ph.title}
+              </h3>
+
+              <ul>
                 {ph.items.map((item, i) => (
                   <li
                     key={i}
-                    className="text-[13.5px] text-[#7A7068] py-[5px] leading-[1.5] border-b border-[rgba(184,146,42,0.07)] last:border-0 before:content-['–  '] before:text-gold before:opacity-50"
+                    className="border-b border-[rgba(184,146,42,0.07)] py-[8px] text-[13px] leading-[1.5] text-[#7A7068] last:border-0 sm:text-[13.5px]"
                   >
+                    <span className="text-gold/60">– </span>
                     {item}
                   </li>
                 ))}
@@ -77,18 +95,42 @@ export default function Phases() {
           ))}
         </div>
 
-        {/* Goal bar */}
-        <div className="fade-up bg-dark-2 gold-left-bar px-6 py-[18px] flex items-center gap-[14px] flex-wrap">
-          <span className="text-[10px] tracking-[2.5px] uppercase text-gold">Goal</span>
-          <p className="font-playfair text-[18px] italic text-[#C4BCB0]">
-            <strong className="text-gold-light not-italic font-bold">Learning AI</strong>
-            {' '}&nbsp;→&nbsp;{' '}
-            <strong className="text-gold-light not-italic font-bold">Using AI</strong>
-            {' '}&nbsp;→&nbsp;{' '}
-            <strong className="text-gold-light not-italic font-bold">Building AI Systems</strong>
+        <div className="fade-up gold-left-bar flex flex-col gap-3 bg-dark-2 px-4 py-4 sm:flex-row sm:items-center sm:gap-[14px] sm:px-6 sm:py-[18px]">
+          <span className="text-[10px] uppercase tracking-[2.5px] text-gold">
+            Goal
+          </span>
+
+          <p className="font-playfair text-[15px] italic text-[#C4BCB0] sm:text-[18px] text-center sm:text-left">
+            <span className="flex flex-col items-center sm:flex-row sm:items-center sm:justify-start gap-2 sm:gap-2">
+              <span className="flex flex-col items-center sm:flex-row sm:items-center gap-1 sm:gap-2">
+                <strong className="not-italic font-bold text-gold-light">
+                  Learning AI
+                </strong>
+
+                <span className="block sm:hidden text-gold-light leading-none">
+                  ↓
+                </span>
+                <span className="hidden sm:inline text-gold-light">→</span>
+              </span>
+
+              <span className="flex flex-col items-center sm:flex-row sm:items-center gap-1 sm:gap-2">
+                <strong className="not-italic font-bold text-gold-light">
+                  Using AI
+                </strong>
+
+                <span className="block sm:hidden text-gold-light leading-none">
+                  ↓
+                </span>
+                <span className="hidden sm:inline text-gold-light">→</span>
+              </span>
+
+              <strong className="not-italic font-bold text-gold-light">
+                Building AI Systems
+              </strong>
+            </span>
           </p>
         </div>
       </div>
     </section>
-  )
+  );
 }
