@@ -7,23 +7,25 @@ import CB1 from '/assets/carlsberg1.jpg'
 import CB2 from '/assets/carlsberg2.jpg'
 import CB4 from '/assets/carlsberg4.jpg'
 import CG  from '/assets/Casa_Grande.jpg'
-
+import AP_LOGO from '/assets/asian-paints-seeklogo.png'
+import CB_LOGO from '/assets/Carlsberg.png'
+import CG_LOGO from '/assets/Casa_grand.png'
 const brands = [
   {
     name: 'Asian Paints',
-    logo: './assets/asian-paints-seeklogo.png',
+    logo: AP_LOGO,
     photos: [AP1, AP2],
     tag: 'Paint & Décor',
   },
   {
     name: 'Carlsberg',
-    logo: './assets/Carlsberg.png',
+    logo: CB_LOGO,
     photos: [CB1, CB2, CB4],
     tag: 'Beverages',
   },
   {
     name: 'Casagrand',
-    logo: './assets/Casa_grand.png',
+    logo: CG_LOGO,
     photos: [CG],
     tag: 'Real Estate',
   },
