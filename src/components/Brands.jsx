@@ -196,7 +196,7 @@ export default function Brands() {
                   </div>
 
                   {brand.photos.length > 1 && (
-                    <div className="flex gap-[6px] rounded-sm">
+                    <div className="flex gap-[6px] roun">
                       {brand.photos.map((_, pi) => (
                         <div
                           key={pi}
