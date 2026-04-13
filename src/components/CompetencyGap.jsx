@@ -85,47 +85,56 @@ export default function CompetencyGap() {
         AI adoption vs. actual proficiency across marketing teams
       </p>
 
-      <div className="mb-10 flex items-end justify-between gap-3 overflow-hidden sm:justify-center sm:gap-6 md:gap-10">
-        {bars.map(({ id, pct, label, color }) => (
-          <div key={id} className="flex w-full max-w-[120px] flex-col items-center gap-3">
-            <span
-              className="font-playfair text-[24px] font-black leading-none sm:text-[28px]"
-              style={{ color }}
-            >
-              {pct}%
-            </span>
+     {/* Vertical Bars */}
+<div
+  className="flex items-end justify-between gap-4 mb-6 sm:justify-center sm:gap-6 md:gap-10"
+  style={{ height: '220px' }}
+>
+  {bars.map(({ id, pct, label, color }) => (
+    <div key={id} className="flex flex-col items-center gap-3 h-full w-full max-w-[200px]  sm:max-w-40">
+      
+      {/* Percentage */}
+      <span
+        className="font-playfair font-black text-[24px] leading-none sm:text-[28px]"
+        style={{ color }}
+      >
+        {pct}%
+      </span>
 
-            <div
-              className="relative flex h-[160px] w-full items-end overflow-hidden rounded-sm bg-[#1A1714] sm:h-[220px] sm:w-16"
-            >
-              {[25, 50, 75].map((line) => (
-                <div
-                  key={line}
-                  className="absolute left-0 w-full"
-                  style={{
-                    bottom: `${line}%`,
-                    borderTop: '1px dashed rgba(184,146,42,0.08)',
-                  }}
-                />
-              ))}
-
-              <div
-                id={id}
-                className="w-full rounded-sm"
-                style={{
-                  background: color,
-                  height: '0%',
-                  transition: 'height 1.4s cubic-bezier(0.22,1,0.36,1)',
-                }}
-              />
-            </div>
-
-            <p className="text-center text-[11px] font-medium leading-tight text-paper sm:text-[1px]">
-              {label}
-            </p>
-          </div>
+      {/* Bar */}
+      <div
+        className="w-full max-w-[75px]    sm:w-16 rounded-sm flex-1 flex items-end overflow-hidden relative"
+        style={{ background: '#1A1714' }}
+      >
+        {[25, 50, 75].map((line) => (
+          <div
+            key={line}
+            className="absolute w-full"
+            style={{
+              bottom: `${line}%`,
+              borderTop: '1px dashed rgba(184,146,42,0.08)',
+            }}
+          />
         ))}
+
+        <div
+          id={id}
+          className="w-full rounded-sm"
+          style={{
+            background: color,
+            height: '0%',
+            transition: 'height 1.4s cubic-bezier(0.22,1,0.36,1)',
+          }}
+        />
       </div>
+
+      {/* Label */}
+      <p className="text-[11px] text-center font-medium text-paper sm:text-[13px] leading-tight">
+        {label}
+      </p>
+    </div>
+  ))}
+</div>
 
       <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-[10px]">
         {stats.map(({ id, label }) => (
