@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
+
 import AP_LOGO from '/assets/asian-paints-seeklogo.png'
 import CB_LOGO from '/assets/Carlsberg.png'
 import CG_LOGO from '/assets/Casa_grand.png'
@@ -12,6 +13,7 @@ import CB2 from '/assets/carlsberg2.jpg'
 import CB4 from '/assets/carlsberg4.jpg'
 
 import CG from '/assets/Casa_Grande.jpg'
+
 const brands = [
   {
     name: 'Asian Paints',
@@ -52,6 +54,7 @@ export default function Brands() {
       gsap.set(el, {
         opacity: i === 0 ? 1 : 0,
         y: i === 0 ? 0 : 24,
+        pointerEvents: i === 0 ? 'auto' : 'none',
       })
     })
 
@@ -62,8 +65,8 @@ export default function Brands() {
       if (!alive) return
 
       const next = (idx + 1) % brands.length
-      const duration = isMobile ? 0.55 : 0.9
-      const hold = isMobile ? 2.5 : 4
+      const duration = isMobile ? 0.55 : 0.85
+      const hold = isMobile ? 2.6 : 4
 
       const tl = gsap.timeline({
         onComplete: () => {
@@ -79,12 +82,13 @@ export default function Brands() {
         y: -14,
         duration: duration * 0.7,
         ease: 'power2.in',
+        pointerEvents: 'none',
       })
 
       tl.fromTo(
         slideRefs.current[next],
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration, ease: 'power2.out' },
+        { opacity: 0, y: 24, pointerEvents: 'none' },
+        { opacity: 1, y: 0, duration, ease: 'power2.out', pointerEvents: 'auto' },
         '-=0.15'
       )
 
@@ -105,7 +109,7 @@ export default function Brands() {
     const photos = brands[current].photos
     if (photos.length <= 1) return
 
-    const els = photoRefs.current.filter(Boolean)
+    const els = photoRefs.current[current] || []
     if (!els.length) return
 
     let pIdx = 0
@@ -159,38 +163,35 @@ export default function Brands() {
           </h2>
         </div>
 
-        <div className="relative overflow-hidden rounded-sm min-h-[480px] md:min-h-[480px]">
+        <div className="relative overflow-hidden rounded-sm min-h-[560px] md:min-h-[520px]">
           {brands.map((brand, i) => (
             <div
               key={brand.name}
               ref={(el) => (slideRefs.current[i] = el)}
-              className="absolute inset-0 grid grid-cols-1 md:grid-cols-[1fr_2fr]"
+              className="absolute inset-0 grid grid-cols-1 md:grid-cols-[0.95fr_1.55fr]"
             >
-              <div
-                className="flex flex-col justify-items-start bg-[#1A1714] px-5 py-5 md:px-10 md:py-10"
-                style={{ minHeight: isMobile ? '180px' : 'auto' }}
-              >
-                <div className="flex items-center">
-                  <img
-                    src={brand.logo}
-                    alt={brand.name}
-                    className="max-h-[32px] max-w-[120px] object-contain opacity-90 md:max-h-[44px] md:max-w-[160px]"
-                  />
-                </div>
+             <div className="flex flex-col justify-between items-center md:items-start text-center md:text-left bg-[#1A1714] px-5 py-5 md:px-10 md:py-10">
+                <div>
+                  <div className="mb-2 flex items-center justify-center md:justify-start w-full">
+                    <img
+                      src={brand.logo}
+                      alt={brand.name}
+                      className="max-h-[34px] max-w-[140px] object-contain opacity-95 md:max-h-[44px] md:max-w-[170px]"
+                    />
+                  </div>
 
-                <div className="mt-6">
-                  <span className="mb-2 block text-[10px] uppercase tracking-[2.5px] text-gold">
-                    {brand.tag}
+                  <span className="mb-2 block text-[10px] uppercase tracking-[2.5px] text-gold text-center md:text-left">
+                    Brand Story
                   </span>
 
                   <h3
-                    className="mb-3 font-playfair font-black leading-tight text-paper md:mb-6"
-                    style={{ fontSize: 'clamp(24px,3vw,36px)' }}
+                    className="max-w-[280px] md:max-w-[320px]  mx-auto md:mx-0 font-playfair font-black leading-tight text-paper md:mb-3"
+                    style={{ fontSize: 'clamp(24px,3vw,38px)' }}
                   >
                     {brand.name}
                   </h3>
 
-                  <div className="mb-3 flex gap-2">
+                 <div className="mb-4 mt-4 flex gap-2 justify-center md:justify-start w-full">
                     {brands.map((_, di) => (
                       <div
                         key={di}
@@ -204,7 +205,7 @@ export default function Brands() {
                   </div>
 
                   {brand.photos.length > 1 && (
-                    <div className="flex gap-[6px] rounded-smy">
+                    <div className="mb-[-100px] flex gap-2 justify-center md:justify-start w-full">
                       {brand.photos.map((_, pi) => (
                         <div
                           key={pi}
@@ -212,7 +213,7 @@ export default function Brands() {
                           style={{
                             background:
                               pi === (i === current ? photoIdx : 0)
-                                ? 'rgba(184,146,42,0.8)'
+                                ? 'rgba(184,146,42,0.85)'
                                 : '#252118',
                           }}
                         />
@@ -221,17 +222,21 @@ export default function Brands() {
                   )}
                 </div>
 
-                <p className="font-playfair italic text-[13px] text-[#3A3530]">
-                  {i + 1} / {brands.length}
-                </p>
+                <div className=" flex items-end justify-between">
+                  
+                  <p className="hidden text-[10px] uppercase tracking-[2px] text-[#6B6258] md:block">
+                    Selected work
+                  </p>
+                </div>
               </div>
 
-              <div className="relative h-[240px] overflow-hidden md:h-auto rounded-sm">
+              <div className="relative h-[300px] overflow-hidden md:h-auto">
                 {brand.photos.map((src, pi) => (
                   <img
                     key={pi}
                     ref={(el) => {
-                      if (i === current) photoRefs.current[pi] = el
+                      if (!photoRefs.current[i]) photoRefs.current[i] = []
+                      photoRefs.current[i][pi] = el
                     }}
                     src={src}
                     alt={`${brand.name} ${pi + 1}`}
@@ -244,14 +249,14 @@ export default function Brands() {
                   className="pointer-events-none absolute inset-0"
                   style={{
                     background:
-                      'linear-gradient(120deg, rgba(14,12,10,0.65) 0%, rgba(184,146,42,0.03) 100%)',
+                      'linear-gradient(120deg, rgba(14,12,10,0.70) 0%, rgba(184,146,42,0.04) 100%)',
                   }}
                 />
 
                 <span
                   className="pointer-events-none absolute bottom-4 right-4 hidden select-none font-playfair font-black italic md:block md:bottom-6 md:right-8"
                   style={{
-                    fontSize: 'clamp(36px,5vw,64px)',
+                    fontSize: 'clamp(34px,5vw,64px)',
                     color: 'rgba(184,146,42,0.12)',
                     lineHeight: 1,
                   }}
