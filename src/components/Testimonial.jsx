@@ -30,6 +30,7 @@ export default function Testimonial() {
       className="py-[60px] md:py-[80px] px-4 sm:px-6 md:px-[5%] bg-dark-2 overflow-hidden"
     >
       <div className="max-w-[1200px] mx-auto">
+        
         {/* Header */}
         <div className="fade-up text-center mb-8 md:mb-12">
           <span className="text-[10px] md:text-[11px] font-medium tracking-[3.5px] uppercase text-gold">
@@ -49,26 +50,32 @@ export default function Testimonial() {
                 md:w-[300px] 
                 lg:w-[320px]
 
-                bg-dark 
+                bg-[#181512] 
                 border border-[rgba(184,146,42,0.18)] 
                 rounded-sm 
 
                 p-5 md:p-6 
-                flex flex-col justify-between
+                flex flex-col items-center justify-center text-center
 
                 min-h-[180px] md:min-h-[200px]
                 "
               >
-                <p className="text-[14px] md:text-[15px] text-[#E6D8C5] italic leading-[1.6] mb-5">
-                  “{t.text}”
-                </p>
 
-                <div className="text-[12px] text-[#A09080] leading-[1.5]">
+                {/* MESSAGE */}
+                <div className="mb-4">
+                  <p className="text-[14px] md:text-[15px] text-[#EAE4DB] italic leading-[1.65] tracking-[0.2px]">
+                    “{t.text}”
+                  </p>
+                </div>
+
+                {/* AUTHOR */}
+                <div className="mt-4 text-[12px] text-[#8E8175] leading-[1.5] border-t border-[rgba(184,146,42,0.15)] pt-3">
                   <span className="block text-paper font-medium text-[13px] md:text-[14px]">
                     {t.name}
                   </span>
                   {t.role} @ {t.company}
                 </div>
+
               </div>
             ))}
           </div>
@@ -80,4 +87,4 @@ export default function Testimonial() {
       </div>
     </section>
   );
-} 
+}
