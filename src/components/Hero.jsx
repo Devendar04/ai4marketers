@@ -28,10 +28,10 @@ export default function Hero() {
             className="font-playfair italic text-[#C4BCB0] leading-snug"
             style={{ fontSize: "clamp(20px, 2.5vw, 24px)" }}
           >
-            "AI won't replace you —
+            "AI won't replace you. 
             <br />
             <span className="text-gold-light not-italic font-bold">
-              but people who don’t use it will be replaced.
+              Someone using AI will.
             </span>
             "
           </p>
@@ -41,8 +41,8 @@ export default function Hero() {
           >
             <span className="text-[#A09080] ">
               69% of marketers already use AI.
-            </span>{" "}
             72% still don't know how to make it work.{" "}
+            </span>
             
           </p>
         </div>
@@ -69,7 +69,7 @@ export default function Hero() {
         <div className="flex gap-9 justify-center flex-wrap">
           <MetaItem num="8 hrs" label="Full-day format" />
           <div className="w-px h-10 self-center bg-[rgba(184,146,42,0.25)] hidden sm:block" />
-          <MetaItem num="15+" label="AI tools covered" />
+          <MetaItem num="25+" label="AI tools covered" />
           <div className="w-px h-10 self-center bg-[rgba(184,146,42,0.25)] hidden sm:block" />
           <MetaItem num="100%" label="Hands-on outputs" />
         </div>
@@ -84,7 +84,7 @@ function MetaItem({ num, label }) {
       <span className="font-playfair text-[28px] font-bold text-gold-light block leading-none mb-1">
         {num}
       </span>
-      <span className="text-[11px] tracking-[1.5px] uppercase text-[#5A5248]">
+      <span className="text-[11px] tracking-[1.5px] uppercase text-[#d2c4b3]">
         {label}
       </span>
     </div>

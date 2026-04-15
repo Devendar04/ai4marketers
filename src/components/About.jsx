@@ -69,13 +69,13 @@ export default function About() {
                 Sai <em className="italic text-gold-light">Ganesh</em>
               </h2>
               <p className="text-[15px] text-[#A09080] leading-[1.75] max-w-[480px]">
-                15 years in brand marketing — in rooms where campaigns get made,
+                17+ years in brand marketing  in rooms where campaigns get made,
                 teams get built, and budgets get spent. Head of Brand at Dunzo.
                 AVP Marketing at Zomato Gold. Senior Brand Manager at AB InBev
                 and TVS Motors.
               </p>
               <a
-                href="https://www.saiganeshullas.com"
+                href="https://saig2000.wixsite.com/my-site-2"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-block mt-5 text-gold-light no-underline text-[13px] border-b border-[rgba(184,146,42,0.3)] pb-px transition-colors duration-200 hover:border-gold-light"

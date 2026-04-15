@@ -85,7 +85,7 @@ export default function CTA() {
           </a>
 
           <a
-            href="mailto:sai@brandtherapy.in"
+            href="mailto:sai@indiawantstoknow.com"
             className="flex items-center gap-2 border border-[rgba(184,146,42,0.4)] text-gold-light text-[14px] font-normal px-7 py-[13px] rounded-sm no-underline transition-all duration-200 hover:border-gold hover:bg-[rgba(184,146,42,0.05)]"
           >
             <svg
@@ -101,7 +101,7 @@ export default function CTA() {
               <rect x="2" y="4" width="20" height="16" rx="2" />
               <polyline points="2,4 12,13 22,4" />
             </svg>
-            sai@brandtherapy.in
+            sai@brandtherapyworks.com
           </a>
         </div>
 

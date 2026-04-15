@@ -84,3 +84,17 @@
     display: none;
   }
 }
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Desktop */
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+/* Mobile (slower for readability) */
+.animate-marquee-mobile {
+  animation: marquee 36s linear infinite;
+}

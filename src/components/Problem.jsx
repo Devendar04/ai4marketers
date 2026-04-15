@@ -38,13 +38,13 @@ export default function Problem() {
           {problems.map((p) => (
             <div
               key={p.num}
-              className="problem-card-wrap bg-dark-3 px-6 py-7 relative overflow-hidden"
+              className="problem-card-wrap bg-dark-3 px-4 py-4 sm:px-5 sm:py-5 flex flex-col items-center justify-center text-center min-h-[100px] sm:min-h-[115px]"
             >
-              <span className="font-playfair text-[44px] font-black text-[rgba(239,198,85,0.62)] leading-none mb-[14px] block">
+              <span className="font-playfair text-[29px] sm:text-[33px] font-black text-[rgba(239,198,85,0.62)] leading-none mb-[10px] block">
                 {p.num}
               </span>
 
-              <h3 className="font-playfair text-[19px] font-bold leading-[1.3]">
+             <h3 className="font-playfair text-[15px] sm:text-[16px] font-bold leading-[1.2]">
                 {p.title}
               </h3>
             </div>
