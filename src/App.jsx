@@ -15,13 +15,14 @@ export default function App() {
     <>
       <Nav />
       <Hero />
+      <Brands />
+
       <CompetencyGap/>
       <Problem />
       <Phases />
       <Curriculum />
       <Audience />
       <About />
-      <Brands />
       <Testimonial /> 
       <CTA />
       <Footer />
