@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Nav          from './components/Nav'
 import Footer       from './components/Footer'
-import Home         from './pages/Home'
+import Home         from './pages/Homepage'
 import PromptsPage  from './pages/PromptsPage'
 import StackPage    from './pages/StackPage'
 import AdminPrompts from './components/AdminPrompts'
