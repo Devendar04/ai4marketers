@@ -1,16 +1,3 @@
-/**
- * AdminPrompts.jsx
- * ─────────────────────────────────────────────────────────────
- * Mobile-first admin panel for Prompt Vault — Supabase powered.
- *
- * Fixes:
- *  ✅ Fully mobile responsive (320px → desktop)
- *  ✅ "Seed Database" button → populates Supabase from promptsData.js
- *  ✅ Real-time CRUD (categories + prompts)
- *  ✅ Bottom-sheet modals on mobile
- *  ✅ Horizontal category pills on mobile
- * ─────────────────────────────────────────────────────────────
- */
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "../lib/supabaseClient";
