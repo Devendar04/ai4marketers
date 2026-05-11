@@ -1,31 +1,35 @@
-import Nav from './components/Nav'
-import Hero from './components/Hero'
-import Problem from './components/Problem'
-import Phases from './components/Phases'
-import Curriculum from './components/Curriculum'
-import Audience from './components/Audience'
-import About from './components/About'
-import Brands from './components/Brands'
-import Testimonial from './components/Testimonial'
-import CTA from './components/CTA'
-import Footer from './components/Footer'
-import CompetencyGap from './components/CompetencyGap'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import Nav          from './components/Nav'
+import Footer       from './components/Footer'
+import Home         from './pages/Home'
+import PromptsPage  from './pages/PromptsPage'
+import StackPage    from './pages/StackPage'
+import AdminPrompts from "./components/AdminPrompts"
+
 export default function App() {
+  const { pathname } = useLocation()
+  const isAdmin = pathname === '/admin'
+
   return (
     <>
-      <Nav />
-      <Hero />
-      <Brands />
+      {/* Nav (+ WhatsApp bubble + mobile tab bar) hidden on /admin */}
+      {!isAdmin && <Nav />}
 
-      <CompetencyGap/>
-      <Problem />
-      <Phases />
-      <Curriculum />
-      <Audience />
-      <About />
-      <Testimonial /> 
-      <CTA />
-      <Footer />
+      <main className={
+        isAdmin
+          ? ""                                              // no padding on admin
+          : "pt-[54px] pb-[60px] md:pt-[64px] md:pb-0"   // normal site offset
+      }>
+        <Routes>
+          <Route path="/"        element={<Home />} />
+          <Route path="/prompts" element={<PromptsPage />} />
+          <Route path="/stack"   element={<StackPage />} />
+          <Route path="/admin"   element={<AdminPrompts />} />
+        </Routes>
+
+        {/* Footer hidden on /admin */}
+        {!isAdmin && <Footer />}
+      </main>
     </>
   )
 }
