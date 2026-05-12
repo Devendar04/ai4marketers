@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { useState, useEffect, useRef } from 'react'
 import { useFadeUpAll } from '../hooks/useFadeUp'
 import { Zap, X, ArrowUpRight, Clock, DollarSign, Lightbulb } from 'lucide-react'
@@ -6,6 +7,19 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Best AI Tools for Marketers — Curated Stack",
+  "description": "Hand-picked AI tools for marketing teams. Tested and used in corporate workshops with Zomato, AB InBev, TVS Motors and IIM Indore.",
+  "url": "https://ai4marketers.co.in/stack",
+  "author": {
+    "@type": "Person",
+    "name": "Sai Ganesh",
+    "url": "https://ai4marketers.co.in"
+  }
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SmartIcon — priority chain:
@@ -18,7 +32,6 @@ gsap.registerPlugin(ScrollTrigger)
 function SmartIcon({ tool, size = 36 }) {
   const cat = categoryColor[tool.category] ?? '#B8922A'
 
-  // Derive Google favicon URL from the tool's link
   const faviconUrl = (() => {
     try {
       const host = new URL(tool.link).hostname
@@ -26,7 +39,6 @@ function SmartIcon({ tool, size = 36 }) {
     } catch { return null }
   })()
 
-  // Track which fallback level we're on: 'local' | 'favicon' | 'avatar'
   const [stage, setStage] = useState(tool.icon ? 'local' : faviconUrl ? 'favicon' : 'avatar')
 
   function onError() {
@@ -71,7 +83,6 @@ function SmartIcon({ tool, size = 36 }) {
     )
   }
 
-  // ── Letter avatar fallback ────────────────────────────────────────────────
   return (
     <div
       aria-hidden
@@ -98,9 +109,6 @@ function SmartIcon({ tool, size = 36 }) {
   )
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// useZigzag — GSAP ScrollTrigger zig-zag on mobile
-// ─────────────────────────────────────────────────────────────────────────────
 function useZigzag(deps) {
   const gridRef = useRef(null)
 
@@ -136,9 +144,6 @@ function useZigzag(deps) {
   return gridRef
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// AnimatedGrid
-// ─────────────────────────────────────────────────────────────────────────────
 function AnimatedGrid({ tools, onCardClick }) {
   const [visibleKeys, setVisibleKeys] = useState(new Set())
   const [renderKey,   setRenderKey]   = useState(0)
@@ -160,7 +165,6 @@ function AnimatedGrid({ tools, onCardClick }) {
       key={renderKey}
       className="grid gap-3 md:gap-4"
       style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}
-      
     >
       <style>{`
         @media (min-width: 768px)  { .stack-grid { grid-template-columns: repeat(3,1fr) !important; } }
@@ -180,9 +184,6 @@ function AnimatedGrid({ tools, onCardClick }) {
   )
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ToolCard
-// ─────────────────────────────────────────────────────────────────────────────
 function ToolCard({ tool, visible, onClick }) {
   const [hovered, setHovered] = useState(false)
   const cat = categoryColor[tool.category]
@@ -210,19 +211,16 @@ function ToolCard({ tool, visible, onClick }) {
           : '0 2px 6px rgba(0,0,0,0.35)',
       }}
     >
-      {/* Desktop hover glow */}
       <div className="absolute inset-0 pointer-events-none hidden md:block" style={{
         background: `radial-gradient(ellipse 90% 55% at 50% -10%, ${cat}1E 0%, transparent 65%)`,
         opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease',
       }} />
-      {/* Desktop shimmer line */}
       <div className="absolute top-0 left-0 right-0 h-[2px] hidden md:block" style={{
         background: `linear-gradient(90deg, transparent, ${cat}, transparent)`,
         opacity: hovered ? 1 : 0, transition: 'opacity 0.25s ease',
       }} />
 
       <div className="relative z-10 flex flex-col h-full gap-[10px]">
-        {/* Top: icon + name + badge */}
         <div className="flex items-center gap-[10px]">
           <SmartIcon tool={tool} size={34} />
           <div className="flex-1 min-w-0">
@@ -241,12 +239,10 @@ function ToolCard({ tool, visible, onClick }) {
           </div>
         </div>
 
-        {/* Tagline */}
         <p className="text-[11.5px] leading-snug flex-1" style={{ color: '#B0A090' }}>
           {tool.tagline}
         </p>
 
-        {/* Bottom: level + desktop hint */}
         <div className="flex items-center justify-between mt-auto">
           <span
             className="text-[8.5px] tracking-[0.5px] uppercase px-[7px] py-[3px] rounded-sm border font-semibold"
@@ -271,9 +267,6 @@ function ToolCard({ tool, visible, onClick }) {
   )
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ToolModal
-// ─────────────────────────────────────────────────────────────────────────────
 function ToolModal({ tool, onClose }) {
   const cat = categoryColor[tool.category]
   const lvl = levelColor[tool.level]
@@ -317,7 +310,6 @@ function ToolModal({ tool, onClose }) {
         </div>
 
         <div className="px-6 pt-5 pb-8">
-          {/* Header */}
           <div className="flex items-start justify-between gap-4 mb-1">
             <div className="flex items-center gap-3 flex-1">
               <SmartIcon tool={tool} size={48} />
@@ -343,7 +335,6 @@ function ToolModal({ tool, onClose }) {
             </button>
           </div>
 
-          {/* Meta row */}
           <div className="flex flex-wrap gap-2 mt-4 mb-5">
             {[
               { icon: <DollarSign size={10} />, val: tool.pricing   },
@@ -392,10 +383,7 @@ function ToolModal({ tool, onClose }) {
   )
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Stack — main section
-// ─────────────────────────────────────────────────────────────────────────────
-export default function Stack() {
+export default function StackPage() {
   const ref = useFadeUpAll()
   const [active,   setActive]   = useState('General')
   const [selected, setSelected] = useState(null)
@@ -417,9 +405,15 @@ export default function Stack() {
             rgba(184,146,42,0.1) 0%, transparent 60%), #0E0C0A`,
           borderBottom: '1px solid rgba(184,146,42,0.15)',
         }} className="py-[90px] px-[5%] bg-dark border-t border-[rgba(184,146,42,0.25)]">
-      <div className="max-w-[1200px] mx-auto">
 
-        {/* Header */}
+      <SEO
+        title="Best AI Tools for Marketers — Curated Stack | AI4Marketers"
+        description="Hand-picked AI tools for marketing teams. Tested and used in corporate AI workshops with Zomato, AB InBev, TVS Motors and IIM Indore."
+        url="https://ai4marketers.co.in/stack"
+        schema={schema}
+      />
+
+      <div className="max-w-[1200px] mx-auto">
         <div className="fade-up mb-4 max-w-[600px]">
           <span className="text-[10px] font-medium tracking-[3.5px] uppercase text-gold mb-4 block">
             The AI Marketing Stack
@@ -434,7 +428,6 @@ export default function Stack() {
           </p>
         </div>
 
-        {/* Stats */}
         <div className="fade-up flex flex-wrap gap-8 mb-12 mt-8">
           {[
             { num: `${stack.length}+`, label: 'Tools curated' },
@@ -448,7 +441,6 @@ export default function Stack() {
           ))}
         </div>
 
-        {/* Filter scrollbar */}
         <div className="fade-up flex gap-[7px] overflow-x-auto pb-[10px] mb-6"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <style>{`.stack-bar::-webkit-scrollbar{display:none}`}</style>
@@ -477,7 +469,6 @@ export default function Stack() {
           })}
         </div>
 
-        {/* Active label */}
         <div className="fade-up mb-5 flex items-center gap-[8px]">
           {active === 'General' ? (
             <>
@@ -498,10 +489,8 @@ export default function Stack() {
           )}
         </div>
 
-        {/* Grid */}
         <AnimatedGrid tools={displayed} onCardClick={setSelected} />
 
-        {/* Footer */}
         <div className="fade-up mt-10 px-5 py-4 text-[12.5px] italic"
           style={{ borderLeft: '3px solid rgba(184,146,42,0.14)', color: '#5A5248' }}>
           All tools in this stack are covered hands-on during the AI4Marketers workshop.

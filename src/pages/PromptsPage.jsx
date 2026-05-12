@@ -1,9 +1,29 @@
+import SEO           from '../components/SEO'
 import MasterPrompts from '../components/MasterPrompts'
 import CTA           from '../components/CTA'
 
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "50+ ChatGPT Prompts for Marketing Teams",
+  "description": "Free library of ChatGPT prompts for social media, email marketing, brand strategy and content creation. Used in AI workshops across India.",
+  "url": "https://ai4marketers.co.in/prompts",
+  "author": {
+    "@type": "Person",
+    "name": "Sai Ganesh",
+    "url": "https://ai4marketers.co.in"
+  }
+}
+
 export default function PromptsPage() {
   return (
-    <div >
+    <div>
+      <SEO
+        title="50+ ChatGPT Prompts for Marketing Teams — Free Library | AI4Marketers"
+        description="Free collection of ChatGPT prompts for social media, email marketing, brand strategy and content creation. Used in AI workshops with Zomato, AB InBev & TVS Motors."
+        url="https://ai4marketers.co.in/prompts"
+        schema={schema}
+      />
 
       {/* Page hero */}
       <div
