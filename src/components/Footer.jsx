@@ -14,7 +14,7 @@ export default function Footer() {
       </p>
 
       <a
-        href="https://www.saiganeshullas.com"
+        href="https://saig2000.wixsite.com/my-site-2"
         target="_blank"
         rel="noreferrer"
         className="text-gold no-underline text-[12px] hover:text-gold-light transition-colors duration-200 text-center md:text-right"
