@@ -85,7 +85,7 @@ export default function CTA() {
           </a>
 
           <a
-            href="mailto:sai@indiawantstoknow.com"
+            href="mailto:sai@brandtherapyworks.com"
             className="flex items-center gap-2 border border-[rgba(184,146,42,0.4)] text-gold-light text-[14px] font-normal px-7 py-[13px] rounded-sm no-underline transition-all duration-200 hover:border-gold hover:bg-[rgba(184,146,42,0.05)]"
           >
             <svg
