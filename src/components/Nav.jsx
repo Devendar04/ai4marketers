@@ -9,6 +9,7 @@ const links = [
   { to: '/',        label: 'Home',         icon: Home      },
   { to: '/prompts', label: 'Prompts',      icon: FileText  },
   { to: '/stack',   label: 'AI Stack',     icon: Layers    },
+   { to: 'https://blog.ai4marketers.co.in', label: 'Blog', icon: BookOpen, external: true },
 ]
 
 const BLOG_LINK = 'https://blog.ai4marketers.co.in'
@@ -206,40 +207,7 @@ export default function Nav() {
             </NavLink>
           ))}
 
-          {/* ── Blog external link ── */}
-          <a
-            href={BLOG_LINK}
-            target="_blank"
-            rel="noreferrer"
-            className="nav-link-item no-underline"
-            style={{
-              display:       'inline-flex',
-              alignItems:    'center',
-              gap:           '6px',
-              fontSize:      '12.5px',
-              fontWeight:    400,
-              letterSpacing: '0.3px',
-              padding:       '7px 18px',
-              borderRadius:  '32px',
-              background:    'transparent',
-              color:         '#6B6457',
-              border:        '1px solid transparent',
-              transition:    'background 0.2s, color 0.2s',
-              cursor:        'pointer',
-              whiteSpace:    'nowrap',
-              textDecoration: 'none',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.color      = '#A09080'
-              e.currentTarget.style.background = 'rgba(184,146,42,0.05)'
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.color      = '#6B6457'
-              e.currentTarget.style.background = 'transparent'
-            }}
-          >
-            Blog
-          </a>
+          
         </div>
 
         {/* CTA — far right, continuous shimmer */}
