@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { Home, FileText, Layers, MessageCircle } from 'lucide-react'
+import { Home, FileText, Layers, MessageCircle, BookOpen } from 'lucide-react'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Data
@@ -8,8 +8,10 @@ import { Home, FileText, Layers, MessageCircle } from 'lucide-react'
 const links = [
   { to: '/',        label: 'Home',         icon: Home      },
   { to: '/prompts', label: 'Prompts',      icon: FileText  },
-  { to: '/stack',   label: 'Marketing AI Tool Stack',icon: Layers    },
+  { to: '/stack',   label: 'AI Stack',     icon: Layers    },
 ]
+
+const BLOG_LINK = 'https://blog.ai4marketers.co.in'
 
 const WA_LINK = 'https://wa.me/918095978040'
 
@@ -166,11 +168,11 @@ export default function Nav() {
                   style={{
                     display:       'inline-flex',
                     alignItems:    'center',
-                    gap:           '6px',
+                    gap:           '10px',
                     fontSize:      '12.5px',
                     fontWeight:    isActive ? 600 : 400,
                     letterSpacing: '0.3px',
-                    padding:       '7px 18px',
+                    padding:       '7px 25px',
                     borderRadius:  '32px',
                     background:    isActive ? 'rgba(184,146,42,0.12)' : 'transparent',
                     color:         isActive ? '#D4A832' : '#6B6457',
@@ -203,6 +205,41 @@ export default function Nav() {
               )}
             </NavLink>
           ))}
+
+          {/* ── Blog external link ── */}
+          <a
+            href={BLOG_LINK}
+            target="_blank"
+            rel="noreferrer"
+            className="nav-link-item no-underline"
+            style={{
+              display:       'inline-flex',
+              alignItems:    'center',
+              gap:           '6px',
+              fontSize:      '12.5px',
+              fontWeight:    400,
+              letterSpacing: '0.3px',
+              padding:       '7px 18px',
+              borderRadius:  '32px',
+              background:    'transparent',
+              color:         '#6B6457',
+              border:        '1px solid transparent',
+              transition:    'background 0.2s, color 0.2s',
+              cursor:        'pointer',
+              whiteSpace:    'nowrap',
+              textDecoration: 'none',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.color      = '#A09080'
+              e.currentTarget.style.background = 'rgba(184,146,42,0.05)'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.color      = '#6B6457'
+              e.currentTarget.style.background = 'transparent'
+            }}
+          >
+            Blog
+          </a>
         </div>
 
         {/* CTA — far right, continuous shimmer */}
@@ -323,109 +360,116 @@ export default function Nav() {
           {/* Tab items — evenly spaced */}
           {links.map((l, i) => {
             const Icon    = l.icon
-            const isActive = location.pathname === l.to ||
-              (l.to !== '/' && location.pathname.startsWith(l.to))
-
-            // Centre slot: raised gold FAB-style CTA tab
+            const isActive = !l.external && (location.pathname === l.to ||
+              (l.to !== '/' && location.pathname.startsWith(l.to)))
             const isMid = i === Math.floor(links.length / 2)
 
-            return (
+            const inner = (
+              <div
+                style={{
+                  display:        'flex',
+                  flexDirection:  'column',
+                  alignItems:     'center',
+                  justifyContent: 'center',
+                  gap:            '3px',
+                  position:       'relative',
+                }}
+              >
+                <div
+                  style={{
+                    display:        'flex',
+                    alignItems:     'center',
+                    justifyContent: 'center',
+                    width:          isMid ? '44px' : '36px',
+                    height:         isMid ? '44px' : '36px',
+                    borderRadius:   isMid ? '12px' : '10px',
+                    background:     isActive
+                      ? isMid
+                        ? 'linear-gradient(135deg,#C9A030,#9A7018)'
+                        : 'rgba(184,146,42,0.12)'
+                      : isMid
+                        ? 'rgba(184,146,42,0.08)'
+                        : 'transparent',
+                    border:         isActive
+                      ? isMid
+                        ? '1px solid rgba(212,168,50,0.5)'
+                        : '1px solid rgba(184,146,42,0.3)'
+                      : isMid
+                        ? '1px solid rgba(184,146,42,0.2)'
+                        : '1px solid transparent',
+                    boxShadow:      isActive && isMid
+                      ? '0 4px 16px rgba(184,146,42,0.45)'
+                      : isActive
+                        ? '0 0 10px rgba(184,146,42,0.2)'
+                        : 'none',
+                    transition:     'all 0.22s cubic-bezier(0.4,0,0.2,1)',
+                    transform:      isActive && isMid ? 'translateY(-3px)' : 'none',
+                    marginBottom:   isActive && isMid ? '1px' : '0',
+                  }}
+                >
+                  <Icon
+                    size={isMid ? 18 : 17}
+                    style={{
+                      color:      isActive
+                        ? isMid ? '#0A0806' : '#D4A832'
+                        : '#3E3830',
+                      transition: 'color 0.2s',
+                      strokeWidth: isActive ? 2.2 : 1.6,
+                    }}
+                  />
+                </div>
+                <span
+                  style={{
+                    fontSize:      '9.5px',
+                    fontWeight:    isActive ? 600 : 400,
+                    letterSpacing: '0.3px',
+                    color:         isActive
+                      ? isMid ? '#D4A832' : '#C9A84C'
+                      : '#2E2820',
+                    transition:    'color 0.2s',
+                    lineHeight:    1,
+                  }}
+                >
+                  {l.label}
+                </span>
+                {isActive && !isMid && (
+                  <span
+                    className="tab-dot"
+                    style={{
+                      position:     'absolute',
+                      top:          '-6px',
+                      left:         '50%',
+                      transform:    'translateX(-50%)',
+                      width:        '3px',
+                      height:       '3px',
+                      borderRadius: '50%',
+                      background:   '#D4A832',
+                      boxShadow:    '0 0 5px #D4A832',
+                    }}
+                  />
+                )}
+              </div>
+            )
+
+            return l.external ? (
+              <a
+                key={l.to}
+                href={l.to}
+                target="_blank"
+                rel="noreferrer"
+                className="no-underline flex-1 flex flex-col items-center justify-center"
+                style={{ textDecoration: 'none', height: '100%' }}
+              >
+                {inner}
+              </a>
+            ) : (
               <NavLink
                 key={l.to}
                 to={l.to}
                 className="no-underline flex-1 flex flex-col items-center justify-center"
                 style={{ textDecoration: 'none', height: '100%' }}
               >
-                <div
-                  style={{
-                    display:        'flex',
-                    flexDirection:  'column',
-                    alignItems:     'center',
-                    justifyContent: 'center',
-                    gap:            '3px',
-                    padding:        isMid ? '0' : '0',
-                    position:       'relative',
-                  }}
-                >
-                  {/* Icon container */}
-                  <div
-                    style={{
-                      display:        'flex',
-                      alignItems:     'center',
-                      justifyContent: 'center',
-                      width:          isMid ? '44px' : '36px',
-                      height:         isMid ? '44px' : '36px',
-                      borderRadius:   isMid ? '12px' : '10px',
-                      background:     isActive
-                        ? isMid
-                          ? 'linear-gradient(135deg,#C9A030,#9A7018)'
-                          : 'rgba(184,146,42,0.12)'
-                        : isMid
-                          ? 'rgba(184,146,42,0.08)'
-                          : 'transparent',
-                      border:         isActive
-                        ? isMid
-                          ? '1px solid rgba(212,168,50,0.5)'
-                          : '1px solid rgba(184,146,42,0.3)'
-                        : isMid
-                          ? '1px solid rgba(184,146,42,0.2)'
-                          : '1px solid transparent',
-                      boxShadow:      isActive && isMid
-                        ? '0 4px 16px rgba(184,146,42,0.45)'
-                        : isActive
-                          ? '0 0 10px rgba(184,146,42,0.2)'
-                          : 'none',
-                      transition:     'all 0.22s cubic-bezier(0.4,0,0.2,1)',
-                      transform:      isActive && isMid ? 'translateY(-3px)' : 'none',
-                      marginBottom:   isActive && isMid ? '1px' : '0',
-                    }}
-                  >
-                    <Icon
-                      size={isMid ? 18 : 17}
-                      style={{
-                        color:      isActive
-                          ? isMid ? '#0A0806' : '#D4A832'
-                          : '#3E3830',
-                        transition: 'color 0.2s',
-                        strokeWidth: isActive ? 2.2 : 1.6,
-                      }}
-                    />
-                  </div>
-
-                  {/* Label */}
-                  <span
-                    style={{
-                      fontSize:      '9.5px',
-                      fontWeight:    isActive ? 600 : 400,
-                      letterSpacing: '0.3px',
-                      color:         isActive
-                        ? isMid ? '#D4A832' : '#C9A84C'
-                        : '#2E2820',
-                      transition:    'color 0.2s',
-                      lineHeight:    1,
-                    }}
-                  >
-                    {l.label}
-                  </span>
-
-                  {/* Active dot */}
-                  {isActive && !isMid && (
-                    <span
-                      className="tab-dot"
-                      style={{
-                        position:     'absolute',
-                        top:          '-6px',
-                        left:         '50%',
-                        transform:    'translateX(-50%)',
-                        width:        '3px',
-                        height:       '3px',
-                        borderRadius: '50%',
-                        background:   '#D4A832',
-                        boxShadow:    '0 0 5px #D4A832',
-                      }}
-                    />
-                  )}
-                </div>
+                {inner}
               </NavLink>
             )
           })}
