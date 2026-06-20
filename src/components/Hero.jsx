@@ -1,4 +1,5 @@
 export default function Hero() {
+  console.log("Made by Devendra Prajapat ");
   return (
     <section
       className="min-h-screen grid place-items-center pt-[120px] pb-[80px] px-[5%] relative overflow-hidden text-center"
@@ -81,7 +82,7 @@ export default function Hero() {
 function MetaItem({ num, label }) {
   return (
     <div className="text-center">
-      console.log("Made by Devendra Prajapat ");
+      
       
       <span className="font-playfair text-[28px] font-bold text-gold-light block leading-none mb-1">
         {num}
